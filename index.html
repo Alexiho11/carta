@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín Especial</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+     .snoopy-left {
+        width:200px;
+        margin-right:10px;
+}
+     .snoopy-right {
+        width:200px;
+        margin-left:10px;
+} 
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 2000px;
+            margin-top: 20px;
+            text-aling: center:
+        }
+
+        
+   @media (max-width: 2000px) {
+    .header-container {
+        flex-direction: column;
+     }
+    
+    .snoopy-left, .snoopy-right {
+        margin: 10000px 200;
+    }
+ }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5em;
+            margin: 0;
+            text-align: left;
+        }
+
+        .typing {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid white;
+            font-size: 2.5em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .snoopy-img {
+            width: 250px;
+            margin: 20px auto;
+            display: none;
+        }
+
+        .btn-container {
+            margin-top: 30px;    
+        }
+
+        .btn {
+            margin: 10px;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            color: #fff;
+            background: #ff4b5c;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ff1e40;
+        }
+
+        .btn-si {
+            font-size: 2em;
+        }
+
+        .btn-no {
+            font-size: 2em;
+            background: #555;
+        }
+
+        .btn-no:hover {
+            background: #333;
+        }
+
+
+        .message {
+      font-size: 2em;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 20px;
+      }
+
+        .hidden-message {
+            display: none;
+            font-size: 2em;
+            font-weight:bold,
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        /* Animación de corazones flotantes */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 30%, 80% 100%, 50% 75%, 20% 100%, 0% 30%);
+            animation: floatUp 4s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .snoopy-left {
+                margin: 0 auto;
+            }
+            h1 {
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <!-- Imagen de Snoopy al inicio en un costado -->
+        <img src="snoopy_inicio.jpg" alt="Snoopy feliz" class="snoopy-left">
+        <h1 class="typing" id="typingText"></h1>
+        <img src="snoopy_inicio2.jpg" alta "Snoopy feliz" class="snoopy-right">
+        
+
+    </div>
+    
+    <div class="container">
+        <p class="message">Mi amor por ti es tan grande como el cielo de Snoopy cuando vuela en su avión, siempre alto, libre y lleno de alegría.</p>
+        
+        <!-- Imagen de Snoopy que cambiará -->
+        <img id="snoopyChange" src="" class="snoopy-img">
+        
+        <div class="btn-container">
+            <button class="btn btn-si" id="btnSi" onclick="acceptLove()">Sí 💖</button>
+            <button class="btn btn-no" id="btnNo" onclick="rejectLove()">No 😢</button>
+        </div>
+
+        <p class="hidden-message" id="specialMessage">¡Mi amor por tú es como la casita de Snoopy: sencillo, pero con un mundo de felicidad adentro Te amo 💖!</p>
+
+        <!-- Imagen de Snoopy feliz cuando presiona "Sí" -->
+        <img id="snoopyHappy" src="snoopy_feliz.jpg" class="snoopy-img" style="display: none;">
+    </div>
+
+    <script>
+        let sizeSi = 1.2; // Tamaño inicial del botón "Sí"
+        let noCounter = 0; // Contador de veces que se presiona "No"
+        const snoopyImages = [
+            "snoopy_triste1.jpg",
+            "snoopy_triste2.jpg",
+            "snoopy_triste3.jpg"
+        ];
+
+        function acceptLove() {
+            document.getElementById('specialMessage').style.display = 'block';
+            document.getElementById("snoopyChange").style.display = "none"; // Oculta la imagen triste
+            document.getElementById("snoopyHappy").style.display = "block"; // Muestra Snoopy feliz
+        }
+
+        function rejectLove() {
+            sizeSi += 1.5; // Aumenta el tamaño del botón "Sí"
+            document.getElementById("btnSi").style.fontSize = sizeSi + "em";
+            
+            // Cambia la imagen triste en ciclo
+            let imgIndex = noCounter % snoopyImages.length;
+            document.getElementById("snoopyChange").src = snoopyImages[imgIndex];
+            document.getElementById("snoopyChange").style.display = "block";
+
+            noCounter++;
+        }
+
+        // Efecto de escritura en el encabezado
+        const text = "¿Quieres ser mi San Valentín?❤️🥺";
+        let index = 0;
+        function typeEffect() {
+            if (index < text.length) {
+                document.getElementById("typingText").textContent += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, 100); // Velocidad de escritura
+            } else {
+                document.getElementById("typingText").style.borderRight = "none"; // Elimina el cursor al final
+            }
+        }
+        window.onload = typeEffect;
+
+        // Generar corazones flotantes
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            document.body.appendChild(heart);
+
+            const size = Math.random() * 20 + 10 + "px";
+            heart.style.width = size;
+            heart.style.height = size;
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+    </script>
+
+</body>
+</html>
